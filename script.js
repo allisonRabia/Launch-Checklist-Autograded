@@ -1,4 +1,4 @@
-const { pickPlanet, addDestinationInfo } = require("./scriptHelper");
+//const { pickPlanet, addDestinationInfo } = require("./scriptHelper");
 
 window.addEventListener("load", function () {
   const button = document.getElementById("formSubmit");

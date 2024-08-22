@@ -1,6 +1,6 @@
 // Write your helper functions here!
 
-require("cross-fetch/polyfill");
+//require("cross-fetch/polyfill");
 
 function addDestinationInfo(
   document,
@@ -25,8 +25,7 @@ function addDestinationInfo(
 }
 
 function validateInput(testInput) {
-  //if (typeof testInput === "string") {
-  if (testInput.trim() === "") {
+  if (testInput === "") {
     return "Empty";
   } else if (isNaN(testInput) === true) {
     return "Not a Number";
@@ -48,30 +47,38 @@ function formSubmission(document, list, pilot, copilot, fuelLevel, cargoLevel) {
   if (validateInput(cargoLevel) !== "Is a Number") {
     alert("Invalid Input");
   } else {
-    document.getElementById("pilotStatus").innerHTML = `Pilot ${pilot} Ready`;
+    document.getElementById(
+      "pilotStatus"
+    ).innerHTML = `Pilot ${pilot} is ready for launch`;
     document.getElementById(
       "copilotStatus"
-    ).innerHTML = `Pilot ${copilot} Ready `;
+    ).innerHTML = `Co-pilot ${copilot} is ready for launch `;
 
     if (fuelLevel < 10000) {
       document.getElementById("faultyItems").style = "visible";
       document.getElementById("fuelStatus").innerHTML =
         "Fuel level too low for launch.";
       document.getElementById("launchStatus").innerHTML =
-        "Shuttle not ready for launch.";
+        "Shuttle Not Ready for Launch.";
       document.getElementById("launchStatus").style.color = "red";
+    } else if (fuelLevel >= 10000) {
+      document.getElementById("fuelStatus").innerHTML =
+        "Fuel level high enough for launch.";
     }
     if (cargoLevel > 10000) {
       document.getElementById("faultyItems").style = "visible";
       document.getElementById("cargoStatus").innerHTML =
-        "Cargo Mass too high for launch.";
+        "Cargo mass too heavy for launch.";
       document.getElementById("launchStatus").innerHTML =
-        "Shuttle not ready for launch.";
+        "Shuttle Not Ready for Launch.";
       document.getElementById("launchStatus").style.color = "red";
+    } else if (cargoLevel <= 10000) {
+      document.getElementById("cargoStatus").innerHTML =
+        "Cargo mass low enough for launch.";
     }
     if (fuelLevel >= 10000 && cargoLevel < 10000) {
       document.getElementById("launchStatus").innerHTML =
-        "Shuttle ready for launch.";
+        "Shuttle is Ready for Launch.";
       document.getElementById("launchStatus").style.color = "green";
     }
   }
@@ -84,6 +91,7 @@ async function myFetch() {
   ).then(function (response) {
     return response.json();
   });
+  return planetsReturned;
 }
 
 function pickPlanet(planets) {
